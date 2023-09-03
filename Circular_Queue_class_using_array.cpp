@@ -33,7 +33,7 @@ public:
 
         // if the rear reaches to the last index of the array size
         else if (rear == size - 1)
-            rear = 0;
+            rear = 0; // to maintain the cyclic nature of the queue.
 
         // the normal case
         else
@@ -58,7 +58,7 @@ public:
 
         // if the list is not empty and the front is reached the last
         else if (front == size - 1)
-            front = 0;
+            front = 0; // to maintain the cyclic nature of the queue.
 
         // the normal case.
         else
