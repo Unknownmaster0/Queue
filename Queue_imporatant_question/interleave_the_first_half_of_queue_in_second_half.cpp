@@ -63,13 +63,17 @@ int findLength(queue<int> q)
     }
     return length;
 }
+
 /*
+
 // method 1 -> using the queue
 queue<int> interleaveHalf(queue<int> q)
 {
     queue<int> newQueue;
 
+    int length = findLength(q);
     int mid = findMid(q);
+
     // pushing the half first half element of queue in newQueue.
     while (mid)
     {
@@ -91,13 +95,21 @@ queue<int> interleaveHalf(queue<int> q)
         q.pop();
         q.push(val);
 
-    }
+        if(length % 2 != 0 && newQueue.size() == 1)
+            break;
 
+    }
+    if(!newQueue.empty())
+    {
+        q.push(newQueue.front());
+        newQueue.pop();
+    }
     return q;
 }
+
 */
 
-// method 2 -> using stack
+
 void print(queue<int> q)
 {
     while (!q.empty())
@@ -108,12 +120,13 @@ void print(queue<int> q)
     cout << endl;
 }
 
+
+// method 2 -> using stack
 queue<int> interleaveHalf(queue<int> q)
 {
     stack<int> s;
     // step 1 ->
     int mid = findMid(q);
-    int length = findLength(q);
 
     // step 2->
     int index = 0;
@@ -134,7 +147,7 @@ queue<int> interleaveHalf(queue<int> q)
     // step 4 -> if the length is odd, then we need to move back only the (length -  mid) elements of queue.
     // example -> 15 16 17 11 12 13 14
     index = 0;
-    while (index < (length - mid))
+    while (index <  mid)
     {
         q.push(q.front());
         q.pop();
@@ -161,18 +174,11 @@ queue<int> interleaveHalf(queue<int> q)
         q.pop();
         q.push(val);
 
-        if (length % 2 != 0 && s.size() == 1)
-            break;
-    }
-
-    if (!s.empty())
-    {
-        q.push(s.top());
-        s.pop();
     }
 
     return q;
 }
+
 
 int main()
 {
