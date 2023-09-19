@@ -40,8 +40,56 @@ int solve(int *arr, int n, int k)
 /*Next method using the two deque.*/
 int solve(int *arr,int n, int k)
 {
+    int sum = 0;
     deque<int>maxi(k);
     deque<int>mini(k);
+
+// iterating the first k size window.
+    for(int i = 0; i<k; i++)
+    {
+        // addition logic 
+        // if element is pushed in the maxi queue then it must follow the descending order.
+        // checking the descending order of the maxi.
+        while( !maxi.empty() && arr[maxi.front()] <= arr[i])
+            maxi.pop_back();
+
+// same case with mini.
+        // if element is pushed in the mini queue then it must follow the ascending order.
+        while( !mini.empty() && arr[mini.front()] >= arr[i])
+            mini.pop_back();
+
+        // do push in the maxi and mini
+        maxi.push_back(i);
+        mini.push_back(i);
+    }
+    sum += arr[maxi.front()]+arr[mini.front()];
+
+    for(int i = k; i<n; i++)
+    {
+        /*Removal logic of the element if the any element in queue is out of range of K size window*/
+        while( !maxi.empty() && i - maxi.front() >= k )
+            maxi.pop_back();
+
+        while( !maxi.empty() && i - maxi.front() >= k )
+            maxi.pop_back();
+
+        // addition of the elements in the maxi and mini
+        // checking the ascending and descending order trend of both.
+        while( !maxi.empty() && arr[maxi.front()] <= arr[i])
+            maxi.pop_back();
+
+        while( !mini.empty() && arr[mini.front()] >= arr[i])
+            mini.pop_back();
+        
+        // do push in the maxi and mini
+        maxi.push_back(i);
+        mini.push_back(i);
+
+        // finding sum
+        sum += arr[maxi.front()]+arr[mini.front()];
+    }
+
+    return sum;
 }
 
 int main()
